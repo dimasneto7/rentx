@@ -1,10 +1,9 @@
-import { inject, injectable } from "tsyringe";
+import { ICarsRepository } from "@modules/cars/repositories/ICarsRepository";
 import { Rental } from "@modules/rentals/infra/typeorm/entities/Rental";
 import { IRentalsRepository } from "@modules/rentals/repositories/IRentalsRepository";
 import { IDateProvider } from "@shared/container/providers/DateProvider/IDateProvider";
 import { AppError } from "@shared/errors/AppError";
-import { ICarsRepository } from "@modules/cars/repositories/ICarsRepository";
-
+import { inject, injectable } from "tsyringe";
 
 interface IRequest {
     user_id: string;
@@ -28,7 +27,6 @@ class CreateRentalUseCase {
         car_id,
         expected_return_date,
     }: IRequest): Promise<Rental> {
-
         const minimumHour = 24;
 
         const carUnavailable = await this.rentalsRepository.findOpenRentalByCar(car_id);
